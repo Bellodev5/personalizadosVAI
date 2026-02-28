@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VAI Personalizados</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
+<link rel="icon" type="image/png" href="logoV.png">
 <style>
   :root {
     --bg:#0d0d0d;--bg2:#161616;--bg3:#1e1e1e;--border:#2a2a2a;
@@ -45,11 +45,12 @@
   @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
   .section-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
-  .section-icon{width:44px;height:44px;flex-shrink:0;background:var(--orange-dim);border:1px solid rgba(224,94,27,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+  .section-icon{width:44px;height:44px;flex-shrink:0;background:var(--orange-dim);border:1px solid rgba(224,94,27,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;}
   .section-header h2{font-family:'Syne',sans-serif;font-size:21px;font-weight:700;color:var(--text);letter-spacing:-0.5px;}
   .section-header p{font-size:13px;color:var(--text-muted);margin-top:2px;}
 
   .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:14px;}
+  .card-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:16px;}
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   @media(max-width:600px){.field-row{grid-template-columns:1fr}}
   .field{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
@@ -59,9 +60,10 @@
   .opt-badge{font-size:10px;background:var(--bg3);border:1px solid var(--border);color:var(--text-muted);padding:2px 7px;border-radius:4px;margin-left:2px;}
   .divider{height:1px;background:var(--border);margin:18px 0;}
 
-  input[type=text],input[type=email],input[type=tel],input[type=url],textarea,select{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:11px 14px;outline:none;transition:border 0.2s,background 0.2s;width:100%;}
+  input[type=text],input[type=email],input[type=tel],input[type=url],input[type=date],textarea,select{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:11px 14px;outline:none;transition:border 0.2s,background 0.2s;width:100%;}
   input:focus,textarea:focus,select:focus{border-color:var(--orange);background:#1a1a1a;}
   input::placeholder,textarea::placeholder{color:var(--text-muted);}
+  input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);}
   select option{background:var(--bg3);}
   textarea{resize:vertical;min-height:100px;}
 
@@ -93,7 +95,6 @@
   .feature-item.selected .feature-check::after{opacity:1;}
   .feature-text strong{font-size:13px;font-weight:500;color:var(--text);display:block;}
   .feature-text small{font-size:11px;color:var(--text-muted);line-height:1.4;}
-  .feature-icon{font-size:17px;flex-shrink:0;}
 
   .link-list{display:flex;flex-direction:column;gap:8px;}
   .link-item{display:flex;align-items:center;gap:8px;}
@@ -136,8 +137,6 @@
   #toast{position:fixed;bottom:24px;right:24px;background:#2a1010;border:1px solid rgba(248,113,113,0.4);color:var(--error);padding:12px 18px;border-radius:var(--radius-sm);font-size:13px;z-index:9999;display:none;max-width:360px;line-height:1.5;}
   #toast.show{display:block;animation:fadeUp 0.3s ease;}
 </style>
-<link rel="icon" type="image/png" href="logoV.png">
-
 </head>
 <body>
 
@@ -165,9 +164,10 @@
 <div class="progress-wrap">
   <div class="progress-steps">
     <div class="p-step active" id="step-ind-1"><div class="p-num">1</div><span class="p-label">Empresa</span></div>
-    <div class="p-step" id="step-ind-2"><div class="p-num">2</div><span class="p-label">Identidade</span></div>
-    <div class="p-step" id="step-ind-3"><div class="p-num">3</div><span class="p-label">Conteúdo</span></div>
-    <div class="p-step" id="step-ind-4"><div class="p-num">4</div><span class="p-label">Revisão</span></div>
+    <div class="p-step" id="step-ind-2"><div class="p-num">2</div><span class="p-label">Responsável</span></div>
+    <div class="p-step" id="step-ind-3"><div class="p-num">3</div><span class="p-label">Identidade</span></div>
+    <div class="p-step" id="step-ind-4"><div class="p-num">4</div><span class="p-label">Conteúdo</span></div>
+    <div class="p-step" id="step-ind-5"><div class="p-num">5</div><span class="p-label">Revisão</span></div>
   </div>
 </div>
 
@@ -179,57 +179,163 @@
       <div class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h1M14 9h1M9 14h1M14 14h1M9 19h6v-4H9z"/></svg></div>
       <div><h2>Dados da Empresa</h2><p>Informações institucionais e de contato</p></div>
     </div>
+
     <div class="card">
+      <div class="card-label">Identificação</div>
       <div class="field-row">
         <div class="field">
-          <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> Nome da Empresa <span class="req">*</span></label>
+          <label>Nome da Empresa <span class="req">*</span></label>
           <input type="text" id="empresa-nome" placeholder="Ex: Padaria Aurora">
         </div>
         <div class="field">
-          <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Razão Social <span class="req">*</span></label>
+          <label>Razão Social <span class="req">*</span></label>
           <input type="text" id="empresa-razao" placeholder="Ex: Aurora Alimentos Ltda">
         </div>
       </div>
-      <div class="field">
-        <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> CNPJ <span class="req">*</span></label>
-        <input type="text" id="empresa-cnpj" placeholder="00.000.000/0001-00" maxlength="18">
-      </div>
-      <div class="divider"></div>
       <div class="field-row">
         <div class="field">
-          <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 10.5a19.79 19.79 0 01-3.07-8.63A2 2 0 012.87 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Telefone / WhatsApp <span class="req">*</span></label>
+          <label>CNPJ <span class="req">*</span></label>
+          <input type="text" id="empresa-cnpj" placeholder="00.000.000/0001-00" maxlength="18">
+        </div>
+        <div class="field">
+          <label>Segmento / Ramo de Atuação <span class="req">*</span></label>
+          <select id="empresa-segmento">
+            <option value="">Selecione...</option>
+            <option>Alimentação & Gastronomia</option>
+            <option>Moda & Vestuário</option>
+            <option>Saúde & Bem-estar</option>
+            <option>Beleza & Estética</option>
+            <option>Educação & Cursos</option>
+            <option>Tecnologia & Software</option>
+            <option>Construção & Reformas</option>
+            <option>Advocacia & Jurídico</option>
+            <option>Contabilidade & Finanças</option>
+            <option>Imóveis & Incorporação</option>
+            <option>Turismo & Hospedagem</option>
+            <option>Automotivo</option>
+            <option>Pets</option>
+            <option>Serviços Gerais</option>
+            <option>Outro</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Contato</div>
+      <div class="field-row">
+        <div class="field">
+          <label>Telefone / WhatsApp <span class="req">*</span></label>
           <input type="tel" id="empresa-tel" placeholder="(47) 99999-9999">
         </div>
         <div class="field">
-          <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> E-mail de Contato <span class="req">*</span></label>
+          <label>E-mail de Contato <span class="req">*</span></label>
           <input type="email" id="empresa-email" placeholder="contato@suaempresa.com.br">
         </div>
       </div>
-      <div class="field" style="margin-bottom:0">
-        <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Cidade / Estado <span class="req">*</span></label>
-        <input type="text" id="empresa-local" placeholder="Ex: Blumenau, SC">
-      </div>
-    </div>
-    <div class="card">
       <div class="field-row">
         <div class="field">
-          <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram <span class="opt-badge">opcional</span></label>
+          <label>Instagram <span class="opt-badge">opcional</span></label>
           <div class="input-prefix"><span>@</span><input type="text" id="empresa-ig" placeholder="seuarroba"></div>
         </div>
         <div class="field">
-          <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> Facebook <span class="opt-badge">opcional</span></label>
+          <label>Facebook <span class="opt-badge">opcional</span></label>
           <input type="text" id="empresa-fb" placeholder="facebook.com/suapagina">
         </div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-label">Endereço Completo da Empresa</div>
+      <div class="field-row">
+        <div class="field">
+          <label>Rua / Avenida <span class="req">*</span></label>
+          <input type="text" id="empresa-rua" placeholder="Ex: Rua das Flores">
+        </div>
+        <div class="field">
+          <label>Número <span class="req">*</span></label>
+          <input type="text" id="empresa-numero" placeholder="Ex: 123">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Bairro <span class="req">*</span></label>
+          <input type="text" id="empresa-bairro" placeholder="Ex: Centro">
+        </div>
+        <div class="field">
+          <label>Complemento <span class="opt-badge">opcional</span></label>
+          <input type="text" id="empresa-complemento" placeholder="Ex: Sala 5, 2º andar">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>CEP <span class="req">*</span></label>
+          <input type="text" id="empresa-cep" placeholder="00000-000" maxlength="9">
+        </div>
+        <div class="field">
+          <label>Cidade / Estado <span class="req">*</span></label>
+          <input type="text" id="empresa-local" placeholder="Ex: Blumenau, SC">
+        </div>
+      </div>
+    </div>
+
     <div class="nav-buttons">
       <div></div>
       <button class="btn btn-primary" onclick="goStep(2)">Próximo →</button>
     </div>
   </div>
 
-  <!-- STEP 2 — Identidade Visual -->
+  <!-- STEP 2 — Responsável -->
   <div class="form-section" id="step-2">
+    <div class="section-header">
+      <div class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div><h2>Dados do Responsável</h2><p>Necessários para registro de domínio e contrato</p></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Identificação Pessoal</div>
+      <div class="field">
+        <label>Nome Completo <span class="req">*</span></label>
+        <input type="text" id="resp-nome" placeholder="Ex: João Silva Souza">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Data de Nascimento <span class="req">*</span></label>
+          <input type="date" id="resp-nascimento">
+        </div>
+        <div class="field">
+          <label>CPF <span class="req">*</span></label>
+          <input type="text" id="resp-cpf" placeholder="000.000.000-00" maxlength="14">
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>RG <span class="req">*</span></label>
+        <input type="text" id="resp-rg" placeholder="Ex: 00.000.000-0">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Contato do Responsável</div>
+      <div class="field-row">
+        <div class="field" style="margin-bottom:0">
+          <label>Telefone pessoal <span class="req">*</span></label>
+          <input type="tel" id="resp-tel" placeholder="(47) 99999-9999">
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>E-mail pessoal <span class="req">*</span></label>
+          <input type="email" id="resp-email" placeholder="joao@gmail.com">
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" onclick="goStep(1)">← Voltar</button>
+      <button class="btn btn-primary" onclick="goStep(3)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 — Identidade Visual -->
+  <div class="form-section" id="step-3">
     <div class="section-header">
       <div class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></div>
       <div><h2>Identidade Visual</h2><p>Cores e estilo do seu site</p></div>
@@ -278,7 +384,7 @@
     </div>
     <div class="card">
       <div class="field">
-        <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M18.37 2.63L14 7l-1.59-1.59a2 2 0 00-2.82 0L8 7l9 9 1.59-1.59a2 2 0 000-2.82L17 10l4.37-4.37a2.12 2.12 0 00-3-3z"/><path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7"/></svg> Estilo Visual do Site</label>
+        <label>Estilo Visual do Site</label>
         <select id="estilo">
           <option value="">Selecione um estilo...</option>
           <option>Moderno & Minimalista</option>
@@ -292,25 +398,25 @@
         </select>
       </div>
       <div class="field" style="margin-bottom:0">
-        <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5Z"/></svg> Vibe da marca <span class="opt-badge">opcional</span></label>
+        <label>Vibe da marca <span class="opt-badge">opcional</span></label>
         <textarea id="vibe" placeholder="Ex: Quero algo clean e moderno, que transmita seriedade mas também criatividade..." rows="3"></textarea>
       </div>
     </div>
     <div class="nav-buttons">
-      <button class="btn btn-secondary" onclick="goStep(1)">← Voltar</button>
-      <button class="btn btn-primary" onclick="goStep(3)">Próximo →</button>
+      <button class="btn btn-secondary" onclick="goStep(2)">← Voltar</button>
+      <button class="btn btn-primary" onclick="goStep(4)">Próximo →</button>
     </div>
   </div>
 
-  <!-- STEP 3 — Conteúdo & Funcionalidades -->
-  <div class="form-section" id="step-3">
+  <!-- STEP 4 — Conteúdo & Funcionalidades -->
+  <div class="form-section" id="step-4">
     <div class="section-header">
       <div class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div>
       <div><h2>Conteúdo & Funcionalidades</h2><p>O que você precisa no seu site</p></div>
     </div>
     <div class="card">
       <div class="field">
-        <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Objetivo principal <span class="req">*</span></label>
+        <label>Objetivo principal <span class="req">*</span></label>
         <select id="objetivo">
           <option value="">Selecione...</option>
           <option>Site Institucional / Vitrine</option>
@@ -322,15 +428,19 @@
           <option>Misto (mais de um objetivo)</option>
         </select>
       </div>
+      <div class="field">
+        <label>Público-alvo <span class="req">*</span></label>
+        <input type="text" id="publico-alvo" placeholder="Ex: Mulheres de 25 a 45 anos interessadas em saúde e bem-estar">
+      </div>
       <div class="field" style="margin-bottom:0">
-        <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Descrição do negócio <span class="req">*</span></label>
-        <textarea id="descricao" placeholder="Fale sobre sua empresa, produtos/serviços, público-alvo e o que o site deve comunicar..." rows="4" oninput="countChars(this,'desc-count',800)"></textarea>
+        <label>Descrição do negócio <span class="req">*</span></label>
+        <textarea id="descricao" placeholder="Fale sobre sua empresa, produtos/serviços e o que o site deve comunicar..." rows="4" oninput="countChars(this,'desc-count',800)"></textarea>
         <span class="char-count" id="desc-count">0 / 800</span>
       </div>
     </div>
     <div class="card">
       <div class="field" style="margin-bottom:14px">
-        <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> Funcionalidades desejadas <span class="opt-badge">opcional</span></label>
+        <label>Funcionalidades desejadas <span class="opt-badge">opcional</span></label>
       </div>
       <div class="feature-grid">
         <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Galeria de Fotos</strong><small>Álbum de imagens</small></div></div>
@@ -349,7 +459,7 @@
     </div>
     <div class="card">
       <div class="field" style="margin-bottom:8px">
-        <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> Links de referência <span class="opt-badge">opcional</span></label>
+        <label>Links de referência <span class="opt-badge">opcional</span></label>
         <p style="font-size:12px;color:var(--text-muted);margin-top:4px">Sites que sirvam de inspiração</p>
       </div>
       <div class="link-list" id="link-list">
@@ -358,13 +468,13 @@
       <button class="btn-add-link" onclick="addLink()">+ Adicionar link</button>
     </div>
     <div class="nav-buttons">
-      <button class="btn btn-secondary" onclick="goStep(2)">← Voltar</button>
-      <button class="btn btn-primary" onclick="goStep(4)">Próximo →</button>
+      <button class="btn btn-secondary" onclick="goStep(3)">← Voltar</button>
+      <button class="btn btn-primary" onclick="goStep(5)">Próximo →</button>
     </div>
   </div>
 
-  <!-- STEP 4 — Revisão -->
-  <div class="form-section" id="step-4">
+  <!-- STEP 5 — Revisão -->
+  <div class="form-section" id="step-5">
     <div class="section-header">
       <div class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
       <div><h2>Revisão Final</h2><p>Confirme os dados antes de enviar</p></div>
@@ -375,12 +485,12 @@
     </div>
     <div class="card">
       <div class="field" style="margin-bottom:0">
-        <label><svg style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Observações adicionais <span class="opt-badge">opcional</span></label>
+        <label>Observações adicionais <span class="opt-badge">opcional</span></label>
         <textarea id="obs" placeholder="Prazos, referências extras, dúvidas..." rows="3"></textarea>
       </div>
     </div>
     <div class="nav-buttons">
-      <button class="btn btn-secondary" onclick="goStep(3)">← Voltar</button>
+      <button class="btn btn-secondary" onclick="goStep(4)">← Voltar</button>
       <button class="btn btn-primary" id="btn-submit" onclick="submitForm()">
         <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Enviar Briefing por E-mail
@@ -404,21 +514,10 @@
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════
-   CONFIG — aponta para a Vercel Function
-   Em desenvolvimento local: http://localhost:3000/api/generate
-   Em produção: /api/generate (relativo ao domínio)
-   ═══════════════════════════════════════════════ */
 const API_URL = '/api/generate';
-
-/* ═══════════════════════════════════════
-   STATE
-   ═══════════════════════════════════════ */
 let currentStep = 1;
 
-/* ═══════════════════════════════════════
-   NAV
-   ═══════════════════════════════════════ */
+/* ═══ NAV ═══ */
 function goStep(n) {
   if (n > currentStep && !validateStep(currentStep)) return;
   const prev = document.getElementById(`step-ind-${currentStep}`);
@@ -429,14 +528,15 @@ function goStep(n) {
   document.getElementById(`step-${n}`).classList.add('active');
   const cur = document.getElementById(`step-ind-${n}`);
   cur.classList.add('active'); cur.classList.remove('done');
-  if (n === 4) buildReview();
+  if (n === 5) buildReview();
   window.scrollTo({ top:0, behavior:'smooth' });
 }
 
 function validateStep(n) {
   const req = {
-    1: ['empresa-nome','empresa-razao','empresa-cnpj','empresa-tel','empresa-email','empresa-local'],
-    3: ['objetivo','descricao'],
+    1: ['empresa-nome','empresa-razao','empresa-cnpj','empresa-segmento','empresa-tel','empresa-email','empresa-rua','empresa-numero','empresa-bairro','empresa-cep','empresa-local'],
+    2: ['resp-nome','resp-nascimento','resp-cpf','resp-rg','resp-tel','resp-email'],
+    4: ['objetivo','publico-alvo','descricao'],
   };
   if (!req[n]) return true;
   for (const id of req[n]) {
@@ -451,9 +551,7 @@ function validateStep(n) {
   return true;
 }
 
-/* ═══════════════════════════════════════
-   UI HELPERS
-   ═══════════════════════════════════════ */
+/* ═══ UI HELPERS ═══ */
 function setLoading(show,text='Enviando...',sub='Aguarde',p=0){
   document.getElementById('loading-overlay').classList.toggle('show',show);
   document.getElementById('loading-text').textContent=text;
@@ -463,7 +561,7 @@ function setLoading(show,text='Enviando...',sub='Aguarde',p=0){
 function setProgress(p,text,sub){
   document.getElementById('loading-bar').style.width=p+'%';
   if(text) document.getElementById('loading-text').textContent=text;
-  if(sub)  document.getElementById('loading-sub').textContent=sub;
+  if(sub !== undefined) document.getElementById('loading-sub').textContent=sub;
 }
 function showToast(msg,ms=4500){
   const t=document.getElementById('toast');
@@ -476,9 +574,7 @@ function countChars(el,cid,max){
   if(n>max) el.value=el.value.slice(0,max);
 }
 
-/* ═══════════════════════════════════════
-   COLORS
-   ═══════════════════════════════════════ */
+/* ═══ COLORS ═══ */
 function updateColorHex(p,h){document.getElementById(h).value=document.getElementById(p).value;updateColorDisplay();}
 function syncColorPicker(h,p){const v=document.getElementById(h).value;if(/^#[0-9a-fA-F]{6}$/.test(v)) document.getElementById(p).value=v;updateColorDisplay();}
 function updateColorDisplay(){
@@ -503,9 +599,7 @@ document.querySelectorAll('#preset-secondary .color-preset').forEach(el=>el.addE
   updateColorDisplay();
 }));
 
-/* ═══════════════════════════════════════
-   FEATURES & LINKS
-   ═══════════════════════════════════════ */
+/* ═══ FEATURES & LINKS ═══ */
 function toggleFeature(el){el.classList.toggle('selected');}
 function getSelectedFeatures(){return [...document.querySelectorAll('.feature-item.selected')].map(el=>el.querySelector('strong').textContent);}
 function addLink(){
@@ -517,23 +611,50 @@ function addLink(){
 function removeLink(btn){if(document.querySelectorAll('.link-item').length>1) btn.closest('.link-item').remove();}
 function getLinks(){return [...document.querySelectorAll('.link-item input')].map(x=>x.value).filter(Boolean);}
 
-/* ═══════════════════════════════════════
-   REVIEW
-   ═══════════════════════════════════════ */
+/* ═══ MASKS ═══ */
+document.getElementById('empresa-cnpj').addEventListener('input',function(){
+  let v=this.value.replace(/\D/g,'').slice(0,14);
+  v=v.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/(\d{4})(\d)/,'$1-$2');
+  this.value=v;
+});
+document.getElementById('empresa-cep').addEventListener('input',function(){
+  let v=this.value.replace(/\D/g,'').slice(0,8);
+  v=v.replace(/^(\d{5})(\d)/,'$1-$2');
+  this.value=v;
+});
+document.getElementById('resp-cpf').addEventListener('input',function(){
+  let v=this.value.replace(/\D/g,'').slice(0,11);
+  v=v.replace(/^(\d{3})(\d)/,'$1.$2').replace(/^(\d{3})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1-$2');
+  this.value=v;
+});
+
+/* ═══ REVIEW ═══ */
 function buildReview(){
+  const enderecoCompleto = [
+    document.getElementById('empresa-rua').value,
+    document.getElementById('empresa-numero').value,
+    document.getElementById('empresa-complemento').value,
+    document.getElementById('empresa-bairro').value,
+    document.getElementById('empresa-cep').value,
+    document.getElementById('empresa-local').value,
+  ].filter(Boolean).join(', ');
+
   const rows=[
     ['Empresa',        document.getElementById('empresa-nome').value||'—'],
     ['Razão Social',   document.getElementById('empresa-razao').value||'—'],
     ['CNPJ',           document.getElementById('empresa-cnpj').value||'—'],
+    ['Segmento',       document.getElementById('empresa-segmento').value||'—'],
     ['Telefone',       document.getElementById('empresa-tel').value||'—'],
     ['E-mail',         document.getElementById('empresa-email').value||'—'],
-    ['Localização',    document.getElementById('empresa-local').value||'—'],
+    ['Endereço',       enderecoCompleto||'—'],
     ['Instagram',      document.getElementById('empresa-ig').value?`@${document.getElementById('empresa-ig').value}`:'—'],
-    ['Facebook',       document.getElementById('empresa-fb').value||'—'],
+    ['Responsável',    document.getElementById('resp-nome').value||'—'],
+    ['CPF',            document.getElementById('resp-cpf').value||'—'],
     ['Cor Principal',  `<span style="display:inline-block;width:13px;height:13px;border-radius:3px;background:${document.getElementById('custom-primary').value};vertical-align:middle;margin-right:6px;border:1px solid rgba(255,255,255,.1)"></span>${document.getElementById('custom-primary').value}`],
     ['Cor Secundária', `<span style="display:inline-block;width:13px;height:13px;border-radius:3px;background:${document.getElementById('custom-secondary').value};vertical-align:middle;margin-right:6px;border:1px solid rgba(255,255,255,.1)"></span>${document.getElementById('custom-secondary').value}`],
     ['Estilo',         document.getElementById('estilo').value||'—'],
     ['Objetivo',       document.getElementById('objetivo').value||'—'],
+    ['Público-alvo',   document.getElementById('publico-alvo').value||'—'],
     ['Funcionalidades',getSelectedFeatures().join(', ')||'Nenhuma selecionada'],
     ['Referências',    getLinks().join(', ')||'—'],
   ];
@@ -542,49 +663,107 @@ function buildReview(){
   ).join('');
 }
 
-/* ═══════════════════════════════════════
-   CNPJ MASK
-   ═══════════════════════════════════════ */
-document.getElementById('empresa-cnpj').addEventListener('input',function(){
-  let v=this.value.replace(/\D/g,'').slice(0,14);
-  v=v.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/(\d{4})(\d)/,'$1-$2');
-  this.value=v;
-});
+/* ═══ GERA PROMPT DE IA ═══ */
+function buildAIPrompt(d) {
+  return `Você é um desenvolvedor web sênior especialista em criar sites profissionais, modernos e de alta conversão.
 
-/* ═══════════════════════════════════════
-   SUBMIT → Vercel Function
-   ═══════════════════════════════════════ */
+Crie a versão 1.0 completa de um site em HTML, CSS e JavaScript puro (arquivo único, tudo inline), com base no briefing abaixo.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BRIEFING DO CLIENTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EMPRESA
+- Nome: ${d.empresa_nome}
+- Segmento: ${d.empresa_segmento}
+- Localização: ${d.endereco_completo}
+- Telefone/WhatsApp: ${d.empresa_tel}
+- Instagram: ${d.empresa_ig}
+- Facebook: ${d.empresa_fb}
+
+IDENTIDADE VISUAL
+- Cor Principal: ${d.cor_principal}
+- Cor Secundária: ${d.cor_secundaria}
+- Estilo: ${d.estilo}
+- Vibe da marca: ${d.vibe}
+
+CONTEÚDO
+- Objetivo do site: ${d.objetivo}
+- Público-alvo: ${d.publico_alvo}
+- Descrição do negócio: ${d.descricao}
+- Funcionalidades solicitadas: ${d.funcionalidades}
+- Sites de referência/inspiração: ${d.referencias}
+- Observações extras: ${d.obs}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INSTRUÇÕES TÉCNICAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Use as cores exatas como variáveis CSS (--primary: ${d.cor_principal}; --secondary: ${d.cor_secundaria})
+2. Escolha uma Google Font adequada ao estilo "${d.estilo}"
+3. Crie seções coerentes com o objetivo: Hero, Sobre, Serviços/Produtos, Contato
+4. Implemente todas as funcionalidades solicitadas de forma funcional
+5. Inclua botão flutuante de WhatsApp com número ${d.empresa_tel}
+6. Adicione animações suaves de entrada em CSS (fade, slide)
+7. O site deve ser 100% responsivo (mobile-first)
+8. Textos devem ser profissionais, criativos e coerentes com o segmento "${d.empresa_segmento}" e direcionados ao público "${d.publico_alvo}"
+9. Inclua meta tags SEO (title, description, og:tags)
+10. Rodapé completo com endereço (${d.endereco_completo}), telefone e redes sociais
+
+Retorne APENAS o código HTML completo, sem explicações, sem blocos de markdown.`;
+}
+
+/* ═══ SUBMIT ═══ */
 async function submitForm() {
   const btn = document.getElementById('btn-submit');
   btn.disabled = true;
-  setLoading(true, 'Analisando briefing...', 'Preparando dados', 5);
+  setLoading(true, 'Preparando envio...', 'Montando briefing completo', 10);
 
   try {
     const features = getSelectedFeatures();
     const links    = getLinks();
 
+    const enderecoCompleto = [
+      document.getElementById('empresa-rua').value,
+      document.getElementById('empresa-numero').value,
+      document.getElementById('empresa-complemento').value,
+      document.getElementById('empresa-bairro').value,
+      document.getElementById('empresa-cep').value,
+      document.getElementById('empresa-local').value,
+    ].filter(Boolean).join(', ');
+
     const payload = {
-      empresa_nome:    document.getElementById('empresa-nome').value,
-      empresa_razao:   document.getElementById('empresa-razao').value,
-      empresa_cnpj:    document.getElementById('empresa-cnpj').value,
-      empresa_tel:     document.getElementById('empresa-tel').value,
-      empresa_email:   document.getElementById('empresa-email').value,
-      empresa_local:   document.getElementById('empresa-local').value,
-      empresa_ig:      document.getElementById('empresa-ig').value ? `@${document.getElementById('empresa-ig').value}` : '—',
-      empresa_fb:      document.getElementById('empresa-fb').value  || '—',
-      cor_principal:   document.getElementById('custom-primary').value,
-      cor_secundaria:  document.getElementById('custom-secondary').value,
-      estilo:          document.getElementById('estilo').value || '—',
-      vibe:            document.getElementById('vibe').value   || '—',
-      objetivo:        document.getElementById('objetivo').value,
-      descricao:       document.getElementById('descricao').value,
-      funcionalidades: features.length ? features.join(', ') : 'Nenhuma selecionada',
-      referencias:     links.length    ? links.join('\n')     : '—',
-      obs:             document.getElementById('obs').value || '—',
-      data_envio:      new Date().toLocaleString('pt-BR'),
+      empresa_nome:      document.getElementById('empresa-nome').value,
+      empresa_razao:     document.getElementById('empresa-razao').value,
+      empresa_cnpj:      document.getElementById('empresa-cnpj').value,
+      empresa_segmento:  document.getElementById('empresa-segmento').value,
+      empresa_tel:       document.getElementById('empresa-tel').value,
+      empresa_email:     document.getElementById('empresa-email').value,
+      empresa_ig:        document.getElementById('empresa-ig').value ? `@${document.getElementById('empresa-ig').value}` : '—',
+      empresa_fb:        document.getElementById('empresa-fb').value || '—',
+      endereco_completo: enderecoCompleto,
+      resp_nome:         document.getElementById('resp-nome').value,
+      resp_nascimento:   document.getElementById('resp-nascimento').value,
+      resp_cpf:          document.getElementById('resp-cpf').value,
+      resp_rg:           document.getElementById('resp-rg').value,
+      resp_tel:          document.getElementById('resp-tel').value,
+      resp_email:        document.getElementById('resp-email').value,
+      cor_principal:     document.getElementById('custom-primary').value,
+      cor_secundaria:    document.getElementById('custom-secondary').value,
+      estilo:            document.getElementById('estilo').value || '—',
+      vibe:              document.getElementById('vibe').value   || '—',
+      objetivo:          document.getElementById('objetivo').value,
+      publico_alvo:      document.getElementById('publico-alvo').value,
+      descricao:         document.getElementById('descricao').value,
+      funcionalidades:   features.length ? features.join(', ') : 'Nenhuma selecionada',
+      referencias:       links.length    ? links.join('\n')     : '—',
+      obs:               document.getElementById('obs').value || '—',
+      data_envio:        new Date().toLocaleString('pt-BR'),
     };
 
-    setProgress(20, 'Gerando o site com IA...', 'Isso pode levar até 30 segundos');
+    payload.prompt_ia = buildAIPrompt(payload);
+
+    setProgress(50, 'Enviando para o servidor...', '');
 
     const res = await fetch(API_URL, {
       method:  'POST',
@@ -592,23 +771,17 @@ async function submitForm() {
       body:    JSON.stringify(payload),
     });
 
-    setProgress(80, 'Enviando e-mail...', 'Quase lá!');
-
+    setProgress(90, 'Enviando e-mail...', 'Quase lá!');
     const data = await res.json();
 
     if (!res.ok && res.status !== 207) {
       throw new Error(data.error || `Erro ${res.status}`);
     }
 
-    if (data.warning) {
-      console.warn('Aviso:', data.warning);
-    }
-
     setProgress(100, 'Tudo pronto! ✓', '');
     await new Promise(r => setTimeout(r, 600));
     setLoading(false);
 
-    // Tela de sucesso
     document.querySelector('.form-container').style.display = 'none';
     document.querySelector('.hero').style.display = 'none';
     document.querySelector('.progress-wrap').style.display = 'none';
