@@ -338,10 +338,9 @@
         <label>Objetivo principal <span class="req">*</span></label>
         <select id="objetivo">
           <option value="">Selecione...</option>
-          <option>Site Institucional / Vitrine</option><option>E-commerce / Vendas</option>
-          <option>Portfólio</option><option>Landing Page / Captação</option>
-          <option>Blog / Conteúdo</option><option>Agendamento de Serviços</option>
-          <option>Misto (mais de um objetivo)</option>
+          <option>Site Institucional / Vitrine</option>
+          <option>Estilo Portfólio</option>
+          <option>Landing Page / Captação</option>
         </select>
       </div>
       <div class="field"><label>Público-alvo <span class="req">*</span></label><input type="text" id="publico-alvo" placeholder="Ex: Mulheres de 25 a 45 anos interessadas em saúde e bem-estar"></div>
@@ -354,17 +353,18 @@
     <div class="card">
       <div class="field" style="margin-bottom:14px"><label>Funcionalidades desejadas <span class="opt-badge">opcional</span></label></div>
       <div class="feature-grid">
-        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Galeria de Fotos</strong><small>Álbum de imagens</small></div></div>
-        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Catálogo de Produtos</strong><small>Listagem com preços</small></div></div>
-        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Agendamento</strong><small>Formulário de horários</small></div></div>
-        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Chat / WhatsApp</strong><small>Botão de contato direto</small></div></div>
+        
+        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Galeria de Fotos</strong><small>Carrossel de imagens</small></div></div>
+        
+        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Catálogo de Produtos</strong><small>Listagem com preços dos produtos/planos</small></div></div>
+        
+        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Agendamento</strong><small>Horários e dias de atendimento + CTA para agendamento no WhatsApp</small></div></div>
+        
+        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Chat / WhatsApp</strong><small>Botão flutuante fixo de contato direto no WhatsApp</small></div></div>
         <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Depoimentos</strong><small>Avaliações de clientes</small></div></div>
+        
         <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Mapa / Localização</strong><small>Google Maps integrado</small></div></div>
-        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Blog / Notícias</strong><small>Artigos e posts</small></div></div>
-        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Loja Virtual</strong><small>Carrinho e checkout</small></div></div>
-        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Newsletter</strong><small>Captura de e-mails</small></div></div>
-        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Vídeo</strong><small>YouTube / Vimeo</small></div></div>
-        <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Área do Cliente</strong><small>Login e painel privado</small></div></div>
+        
         <div class="feature-item" onclick="toggleFeature(this)"><div class="feature-check"></div><div class="feature-text"><strong>Multi-idioma</strong><small>PT / EN / ES</small></div></div>
       </div>
     </div>
@@ -404,7 +404,7 @@
       <button class="btn btn-secondary" onclick="goStep(4)">← Voltar</button>
       <button class="btn btn-primary" id="btn-submit" onclick="submitForm()">
         <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Enviar Briefing por E-mail
+        Enviar Briefing para equipe
       </button>
     </div>
   </div>
@@ -420,7 +420,7 @@
     <div class="summary-item"><span class="skey">1. Análise</span><span class="sval">Nossa equipe revisará o briefing recebido</span></div>
     <div class="summary-item"><span class="skey">2. Contato</span><span class="sval">Retorno em até 1 dia útil</span></div>
     <div class="summary-item"><span class="skey">3. Proposta</span><span class="sval">Briefing detalhado para aprovação</span></div>
-    <div class="summary-item"><span class="skey">4. Desenvolvimento</span><span class="sval">Início após confirmação</span></div>
+    <div class="summary-item"><span class="skey">4. Desenvolvimento</span><span class="sval">Início após confirmação e criação de grupo para contato e informações adicionais (imagens, pagamento de dominio etc...)</span></div>
   </div>
 </div>
 
